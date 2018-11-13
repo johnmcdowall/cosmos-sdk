@@ -274,7 +274,7 @@ jobs:
             if [[ $DOCS_COMMIT == $LAST_COMMIT ]]; then
               chamber exec cosmos-sdk --verbose -- \
               curl -X POST --header "Content-Type: application/json" -d '{"branch":"develop"}' \
-              "https://circleci.com/api/v1.1/project/github/cosmos/cosmos.network/build?circle-token=$CIRCLE_COSMOS_TOKEN"
+              https://circleci.com/api/v1.1/project/github/cosmos/cosmos.network/build?circle-token=$(printenv CIRCLE_COSMOS_TOKEN)
             else
               echo "No changes to docs detected"
             fi
