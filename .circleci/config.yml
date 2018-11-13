@@ -268,7 +268,7 @@ jobs:
           name: Trigger website build
           command: |
             export LAST_COMMIT=`git rev-parse HEAD`
-            export DOCS_COMMIT=`git log -l --format=format:%H --full-diff docs`
+            export DOCS_COMMIT=`git log -1 --format=format:%H --full-diff docs`
             echo $LAST_COMMIT
             echo $DOCS_COMMIT
             if [[ $DOCS_COMMIT == $LAST_COMMIT ]]; then
