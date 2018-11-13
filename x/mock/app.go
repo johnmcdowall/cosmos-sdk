@@ -142,7 +142,7 @@ func SetGenesis(app *App, accs []auth.Account) {
 }
 
 // GenTx generates a signed mock transaction.
-func GenTx(msgs []sdk.Msg, accnums []int64, seq []int64, priv ...crypto.PrivKey) auth.StdTx {
+func GenTx(msgs []sdk.Msg, accnums []uint64, seq []uint64, priv ...crypto.PrivKey) auth.StdTx {
 	// Make the transaction free
 	fee := auth.StdFee{
 		Amount: sdk.Coins{sdk.NewInt64Coin("foocoin", 0)},
@@ -261,7 +261,7 @@ func GetAllAccounts(mapper auth.AccountKeeper, ctx sdk.Context) []auth.Account {
 // GenSequenceOfTxs generates a set of signed transactions of messages, such
 // that they differ only by having the sequence numbers incremented between
 // every transaction.
-func GenSequenceOfTxs(msgs []sdk.Msg, accnums []int64, initSeqNums []int64, numToGenerate int, priv ...crypto.PrivKey) []auth.StdTx {
+func GenSequenceOfTxs(msgs []sdk.Msg, accnums []uint64, initSeqNums []uint64, numToGenerate int, priv ...crypto.PrivKey) []auth.StdTx {
 	txs := make([]auth.StdTx, numToGenerate, numToGenerate)
 	for i := 0; i < numToGenerate; i++ {
 		txs[i] = GenTx(msgs, accnums, initSeqNums, priv...)
@@ -271,7 +271,7 @@ func GenSequenceOfTxs(msgs []sdk.Msg, accnums []int64, initSeqNums []int64, numT
 	return txs
 }
 
-func incrementAllSequenceNumbers(initSeqNums []int64) {
+func incrementAllSequenceNumbers(initSeqNums []uint64) {
 	for i := 0; i < len(initSeqNums); i++ {
 		initSeqNums[i]++
 	}
