@@ -263,6 +263,7 @@ jobs:
   deploy_docs:
     <<: *docs_deploy
     steps:
+      - checkout
       - run:
           name: Trigger website build
           command: |
