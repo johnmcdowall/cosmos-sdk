@@ -1,4 +1,4 @@
-version: 2.1
+version: 2
 
 defaults: &defaults
   working_directory: /go/src/github.com/cosmos/cosmos-sdk
@@ -266,16 +266,22 @@ jobs:
       - run:
           name: Trigger website build
           command: |
-            chamber exec cosmos-sdk --verbose -- \
-            curl -X POST --header "Content-Type: application/json" \
-              -d '{"branch":"$CIRCLE_BRANCH"}' \
-              https://circleci.com/api/v1.1/project/github/tenderbot/cosmos-network/build?circle-token=${CIRCLE_COSMOS_TOKEN}
-
+            export LAST_COMMIT=$(git rev-parse HEAD)
+            export DOCS_COMMIT=$(git log -l --format=format:%H --full-diff docs)
+            if [ $DOCS_COMMIT == $LAST_COMMIT ]; then
+              chamber exec cosmos-sdk --verbose -- \
+              curl -X POST --header "Content-Type: application/json" \
+                -d '{"branch":"$CIRCLE_BRANCH"}' \
+                https://circleci.com/api/v1.1/project/github/tenderbot/cosmos-network/build?circle-token=${CIRCLE_COSMOS_TOKEN}
+            else
+              echo "No changes to docs detected"
+            fi
 
 workflows:
   version: 2
   test-suite:
     jobs:
+      - deploy_docs
       - setup_dependencies
       - lint:
           requires:
