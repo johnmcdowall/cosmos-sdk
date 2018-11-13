@@ -275,7 +275,7 @@ jobs:
               chamber exec cosmos-sdk --verbose -- \
               curl -X POST --header "Content-Type: application/json" \
                 -d '{"branch":"$CIRCLE_BRANCH"}' \
-                https://circleci.com/api/v1.1/project/github/tenderbot/cosmos-network/build?circle-token=${CIRCLE_COSMOS_TOKEN}
+                https://circleci.com/api/v1.1/project/github/tenderbot/cosmos.network/build?circle-token=${CIRCLE_COSMOS_TOKEN}
             else
               echo "No changes to docs detected"
             fi
