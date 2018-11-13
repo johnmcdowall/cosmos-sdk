@@ -11,6 +11,8 @@ docs_update: &docs_deploy
   working_directory: ~/repo
   docker:
     - image: tendermint/docs_deployment
+  environment:
+    AWS_REGION: us-east-1
 
 jobs:
 
