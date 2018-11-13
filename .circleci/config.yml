@@ -267,8 +267,8 @@ jobs:
       - run:
           name: Trigger website build
           command: |
-            export LAST_COMMIT=$(git rev-parse HEAD)
-            export DOCS_COMMIT=$(git log -l --format=format:%H --full-diff docs)
+            export LAST_COMMIT=`git rev-parse HEAD`
+            export DOCS_COMMIT=`git log -l --format=format:%H --full-diff docs`
             if [ $DOCS_COMMIT == $LAST_COMMIT ]; then
               chamber exec cosmos-sdk --verbose -- \
               curl -X POST --header "Content-Type: application/json" \
