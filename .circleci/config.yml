@@ -273,9 +273,8 @@ jobs:
             export DOCS_COMMIT=`git log -1 --format=format:%H --full-diff docs`
             if [[ $DOCS_COMMIT == $LAST_COMMIT ]]; then
               chamber exec cosmos-sdk --verbose -- \
-              curl -X POST --header "Content-Type: application/json" \
-                -d '{"branch":"$CIRCLE_BRANCH"}' \
-                https://circleci.com/api/v1.1/project/github/tenderbot/cosmos.network/build?circle-token=${CIRCLE_COSMOS_TOKEN}
+              curl -X POST --header "Content-Type: application/json" -d '{"branch":"develop"}' \
+              "https://circleci.com/api/v1.1/project/github/cosmos/cosmos.network/build?circle-token=$CIRCLE_COSMOS_TOKEN"
             else
               echo "No changes to docs detected"
             fi
