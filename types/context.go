@@ -12,6 +12,10 @@ import (
 	"github.com/tendermint/tendermint/libs/log"
 )
 
+const (
+	DefaultLimitTxSigs = 7
+)
+
 /*
 The intent of Context is for it to be an immutable object that can be
 cloned and updated cheaply with WithValue() and passed forward to the
@@ -48,6 +52,7 @@ func NewContext(ms MultiStore, header abci.Header, isCheckTx bool, logger log.Lo
 	c = c.WithVoteInfos(nil)
 	c = c.WithGasMeter(NewInfiniteGasMeter())
 	c = c.WithMinimumFees(Coins{})
+	c = c.WithLimitTxSigs(DefaultLimitTxSigs)
 	return c
 }
 
@@ -141,6 +146,7 @@ const (
 	contextKeyVoteInfos
 	contextKeyGasMeter
 	contextKeyMinimumFees
+	contextKeyLimitTxSigs
 )
 
 // NOTE: Do not expose MultiStore.
@@ -173,6 +179,8 @@ func (c Context) GasMeter() GasMeter { return c.Value(contextKeyGasMeter).(GasMe
 func (c Context) IsCheckTx() bool { return c.Value(contextKeyIsCheckTx).(bool) }
 
 func (c Context) MinimumFees() Coins { return c.Value(contextKeyMinimumFees).(Coins) }
+
+func (c Context) LimitTxSigs() int { return c.Value(contextKeyLimitTxSigs).(int) }
 
 func (c Context) WithMultiStore(ms MultiStore) Context { return c.withValue(contextKeyMultiStore, ms) }
 
@@ -225,6 +233,10 @@ func (c Context) WithIsCheckTx(isCheckTx bool) Context {
 
 func (c Context) WithMinimumFees(minFees Coins) Context {
 	return c.withValue(contextKeyMinimumFees, minFees)
+}
+
+func (c Context) WithLimitTxSigs(maxSigsCheck int) Context {
+	return c.withValue(contextKeyLimitTxSigs, maxSigsCheck)
 }
 
 // Cache the multistore and return a new cached context. The cached context is

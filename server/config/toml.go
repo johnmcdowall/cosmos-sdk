@@ -15,6 +15,9 @@ const defaultConfigTemplate = `# This is a TOML config file.
 
 # Validators reject any tx from the mempool with less than the minimum fee per gas.
 minimum_fees = "{{ .BaseConfig.MinFees }}"
+
+# Limit total number of signatures per transaction
+limit_tx_sigs = {{ .BaseConfig.LimitTxSigs }}
 `
 
 var configTemplate *template.Template
