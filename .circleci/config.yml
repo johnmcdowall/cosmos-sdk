@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 
 defaults: &defaults
   working_directory: /go/src/github.com/cosmos/cosmos-sdk
@@ -6,6 +6,11 @@ defaults: &defaults
     - image: circleci/golang:1.11.1
   environment:
     GOBIN: /tmp/workspace/bin
+
+docs_update: &docs_deploy
+  working_directory: ~/repo
+  docker:
+    - image: tendermint/docs_deploy
 
 jobs:
 
@@ -255,6 +260,16 @@ jobs:
               make build-linux
               make localnet-start
               ./scripts/localnet-blocks-test.sh 40 5 10 localhost
+  deploy_docs:
+    <<: *docs_deploy
+    steps:
+      - run:
+          name: Trigger website build
+          command: |
+            chamber exec cosmos-sdk --verbose -- \
+            curl -X POST --header "Content-Type: application/json" \
+              -d '{"branch":"$CIRCLE_BRANCH"}' \
+              https://circleci.com/api/v1.1/project/github/tenderbot/cosmos-network/build?circle-token=${CIRCLE_COSMOS_TOKEN}
 
 
 workflows:
