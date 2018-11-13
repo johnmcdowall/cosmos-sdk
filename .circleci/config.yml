@@ -10,7 +10,7 @@ defaults: &defaults
 docs_update: &docs_deploy
   working_directory: ~/repo
   docker:
-    - image: tendermint/docs_deploy
+    - image: tendermint/docs_deployment
 
 jobs:
 
