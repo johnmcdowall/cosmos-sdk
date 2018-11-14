@@ -202,10 +202,10 @@ func (app *BaseApp) NewContext(isCheckTx bool, header abci.Header) sdk.Context {
 	if isCheckTx {
 		return sdk.NewContext(app.checkState.ms, header, true, app.Logger).
 			WithMinimumFees(app.minimumFees).
-			WithLimitTxSigs(app.limitTxSigs)
+			WithTxSigLimit(app.txSigLimit)
 	}
 	return sdk.NewContext(app.deliverState.ms, header, false, app.Logger).
-		WithLimitTxSigs(app.limitTxSigs)
+		WithTxSigLimit(app.txSigLimit)
 }
 
 type state struct {
