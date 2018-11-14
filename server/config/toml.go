@@ -17,7 +17,7 @@ const defaultConfigTemplate = `# This is a TOML config file.
 minimum_fees = "{{ .BaseConfig.MinFees }}"
 
 # Limit total number of signatures per transaction
-limit_tx_sigs = {{ .BaseConfig.LimitTxSigs }}
+tx_sig_limit = {{ .BaseConfig.TxSigLimit }}
 `
 
 var configTemplate *template.Template

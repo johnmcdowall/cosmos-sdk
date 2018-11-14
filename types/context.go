@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	DefaultLimitTxSigs = 7
+	DefaultTxSigLimit = 7
 )
 
 /*
@@ -52,7 +52,7 @@ func NewContext(ms MultiStore, header abci.Header, isCheckTx bool, logger log.Lo
 	c = c.WithVoteInfos(nil)
 	c = c.WithGasMeter(NewInfiniteGasMeter())
 	c = c.WithMinimumFees(Coins{})
-	c = c.WithLimitTxSigs(DefaultLimitTxSigs)
+	c = c.WithTxSigLimit(DefaultTxSigLimit)
 	return c
 }
 
@@ -146,7 +146,7 @@ const (
 	contextKeyVoteInfos
 	contextKeyGasMeter
 	contextKeyMinimumFees
-	contextKeyLimitTxSigs
+	contextKeyTxSigLimit
 )
 
 // NOTE: Do not expose MultiStore.
@@ -180,7 +180,7 @@ func (c Context) IsCheckTx() bool { return c.Value(contextKeyIsCheckTx).(bool) }
 
 func (c Context) MinimumFees() Coins { return c.Value(contextKeyMinimumFees).(Coins) }
 
-func (c Context) LimitTxSigs() int { return c.Value(contextKeyLimitTxSigs).(int) }
+func (c Context) TxSigLimit() int { return c.Value(contextKeyTxSigLimit).(int) }
 
 func (c Context) WithMultiStore(ms MultiStore) Context { return c.withValue(contextKeyMultiStore, ms) }
 
@@ -235,8 +235,8 @@ func (c Context) WithMinimumFees(minFees Coins) Context {
 	return c.withValue(contextKeyMinimumFees, minFees)
 }
 
-func (c Context) WithLimitTxSigs(maxSigsCheck int) Context {
-	return c.withValue(contextKeyLimitTxSigs, maxSigsCheck)
+func (c Context) WithTxSigLimit(maxSigsCheck int) Context {
+	return c.withValue(contextKeyTxSigLimit, maxSigsCheck)
 }
 
 // Cache the multistore and return a new cached context. The cached context is
