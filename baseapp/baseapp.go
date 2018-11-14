@@ -72,7 +72,7 @@ type BaseApp struct {
 	minimumFees sdk.Coins
 
 	// tx sigs limit for spam prevention
-	limitTxSigs int
+	txSigLimit int
 
 	// flag for sealing
 	sealed bool
